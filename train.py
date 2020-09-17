@@ -3,6 +3,7 @@ import argparse
 from tqdm import tqdm
 import os
 from models.model_espcn import ESPCN
+from models.model_ldsp import LDSP
 from models.model_srcnn import SRCNN
 from models.model_vespcn import VESPCN
 from models.model_vsrnet import VSRnet
@@ -27,7 +28,7 @@ LOGDIR = 'training_logdir/default'
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='train one of the models for image and video super-resolution')
-    parser.add_argument('--model', type=str, default=MODEL, choices=['srcnn', 'espcn', 'vespcn', 'vsrnet'],
+    parser.add_argument('--model', type=str, default=MODEL, choices=['srcnn', 'ldsp', 'espcn', 'vespcn', 'vsrnet'],
                         help='What model to train')
     parser.add_argument('--batch_size', type=int, default=BATCH_SIZE,
                         help='Number of images in batch')
@@ -76,6 +77,8 @@ def main():
         model = SRCNN(args)
     elif args.model == 'espcn':
         model = ESPCN(args)
+    elif args.model == 'ldsp':
+        model = LDSP(args)
     elif args.model == 'vespcn':
         model = VESPCN(args)
     elif args.model == 'vsrnet':
