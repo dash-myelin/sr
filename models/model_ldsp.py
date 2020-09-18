@@ -27,8 +27,8 @@ class LDSP(Model):
             lr_batch = tf.pad(lr_batch, [[0, 0], [3, 3], [3, 3], [0, 0]], 'CONSTANT')
             net = tf.layers.conv2d(lr_batch, 16, 3, activation=tf.nn.relu, padding='valid', name='conv1',
                                    kernel_initializer=tf.keras.initializers.he_normal())
-            net = tf.layers.conv2d(net, 16, 3, activation=tf.nn.relu, padding='valid', name='conv2',
-                                   kernel_initializer=tf.keras.initializers.he_normal())
+            net = tf.layers.separable_conv2d(net, 16, 3, activation=tf.nn.relu, padding='valid', name='conv2',
+                                   depthwise_initializer=tf.keras.initializers.he_normal(), pointwise_initializer=tf.keras.initializers.he_normal())
             net = tf.layers.conv2d(net, self._scale_factor ** 2, 3, activation=tf.nn.relu, padding='valid',
                                    name='conv3', kernel_initializer=tf.keras.initializers.he_normal())
             predicted_batch = tf.depth_to_space(net, self._scale_factor, name='prediction')
